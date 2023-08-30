@@ -5,6 +5,11 @@
 // .then consume la promesa
 // si la promesa falla se va a .catch
 
+
+
+
+
+
 // CON METODO .THEN
 
 fetch("data.json")
@@ -29,6 +34,8 @@ fetch("data.json")
 
 
 
+
+
 //CON METODO ASYNC Y AWAIT
 
 const getGames = async () => {                 //async: es para que funcione el await
@@ -38,11 +45,76 @@ const getGames = async () => {                 //async: es para que funcione el 
             throw new Error ("error");
         }
         const data = await res.json();         //
+        const gameList = document.getElementById('gameList');
+
         data.forEach(item => {
-            console.log(item.name);
+            const li = document.createElement('li');     //CREANDO ELEMENTO LI CREATE ELEMENT
+            li.textContent = item.name;
+            gameList.appendChild(li);
         })
     } catch (error) {                          //en caso de error
         console.log(error)
+    }
+}
+
+getGames();
+
+
+
+
+
+
+// LO MISMO PERO CREANDO CON INNERHTML
+
+
+
+
+const getGames = async () => {
+    try {
+        const res = await fetch("data.json");
+        if (!res.ok) {
+            throw new Error("error");
+        }
+        const data = await res.json();
+        const gameList = document.getElementById("gameList"); // Obtener el elemento ul
+
+        let liHTML = ''; // Variable para almacenar el HTML de los elementos li
+
+        data.forEach(item => {
+            liHTML += `<li><span>${item.name}</span></li>`; // Agregar el HTML del li con el nombre del juego
+        });
+
+        gameList.innerHTML = liHTML; // Establecer el contenido HTML del ul
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getGames();
+
+
+
+
+
+
+// LO MISMO PERO CON INNERTEXT
+
+const getGames = async () => {
+    try {
+        const res = await fetch("data.json");
+        if (!res.ok) {
+            throw new Error("error");
+        }
+        const data = await res.json();
+        const gameList = document.getElementById("gameList"); // Obtener el elemento ul
+
+        data.forEach(item => {
+            const li = document.createElement("li"); // Crear un nuevo elemento li
+            li.innerText = item.name; // Establecer el contenido de texto del li usando innerText
+            gameList.appendChild(li); // Agregar el li al ul
+        });
+    } catch (error) {
+        console.log(error);
     }
 }
 
